@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+        * {
+            font-family: 'Roboto', sans-serif;
+
+        }
+
+        body {
+            margin: 20px 50px 150px 50px;
+            text-align: center;
+            background-image: linear-gradient(135deg, rgb(23, 233, 173), rgb(29, 24, 208));
+        }
+
+        h1,
+        p {
+            margin-top: 0px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+
+            /* border: 1px solid #333;
+            background-color: #f0f0f0e4;*/
+            padding: 20px;
+            border-radius: 10px;
+            margin: auto;
+            width: 300px;
+            height: 300px;
+            /* background-color: rgb(154, 235, 212); */
+
+        }
+
+        .formOutline {
+            margin: 15%;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+            font-size: 20px;
+            color: #fff;
+        }
+        input {
+      margin-right:0.5em;
+      
+        background-color:#fff;
+        border-color: #fff;
+        border-radius: 5px;
+    }
+        button {
+            /* 
+            background-color: rgba(255, 255, 255, 0.05);
+            */
+            margin-top: 20px;
+            border-radius: 4px;
+             background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+            width: 200px;
+            font-size: large;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Registration Form</h1>
+    <p>Please fill out this form with the required information</p>
+    <form method="post" action='/action.php'>
+        <div class="formOutline mb-4">
+            <label for="name">Enter Your Name: <input id="name" name="name" type="text" required /></label>
+        </div>
+        <div class="formOutline mb-4">
+            <label for="email">Enter Your Email: <input id="email" name="email" type="email" required /></label>
+        </div>
+        <div class="formOutline mb-4">
+            <label for="password">Password: <input id="password" name="password" type="password" required /></label>
+        </div>
+    </form>
+    <button onclick="submitForm()">Submit</button>
+    <script>
+        async function submitForm() {
+            // console.log("HElo");
+            const formData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+            }
+            console.log(formData);
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const result = await response.json();
+            console.log(result);
+            if (result.status === 200) {
+                // console.log(result.status)
+                window.location.href = "/success.html";
+            } else {
+                window.location.href = "/error.html";
+            }
+        }
+    </script>
+</body>
+
+</html>
